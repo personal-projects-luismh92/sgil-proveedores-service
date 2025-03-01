@@ -1,0 +1,68 @@
+# sgil-proveedores-service
+Sistema de Gestión Integral de Logística y Comercio (SGIL) , backend service
+
+
+### Instalar dependencias
+
+```
+make install
+```
+
+
+
+### Ejecutar el proyecto desde el folder raiz `sgil-proveedores-service`
+```
+make run
+```
+
+### Ejecutar pruebas
+```
+make test
+```
+
+### Formatear el codigo con Black
+```
+make format
+```
+
+### Revisar errores de linting con Flake8:
+```
+make lint
+```
+
+### Eliminar entorno virtual y reinstalar todo 
+```
+make reset
+```
+
+### Estructura del proyecto
+
+
+```
+📂 sgil-compras-service/       # Folder raiz
+│
+│── 📂 app/                    # Contains the main application files
+│   │── 📂 models/             # Modelos SQLAlchemy
+│   │── 📂 schemas/            # Esquemas Pydantic
+│   │── 📂 repositories/       # Lógica de acceso a BD
+│   │── 📂 services/           # Lógica de negocio
+│   │── 📂 routers/            # Endpoints de la API
+│   │── 📂 core/               # Configuración del sistema
+│   │   │── database.py        # Configuración de la base de datos
+│   │── main.py                # Punto de entrada de FastAPI
+│── requirements.txt           # Dependencias del proyecto
+│── .env                       # Variables de entorno (si usas PostgreSQL, MySQL, etc.)
+│── alembic/                   # Migraciones de base de datos (opcional)
+```
+
+
+### Correr contenedor
+ - ### Construir image de docker
+    ```
+        docker build --no-cache -t sgil-proveedores-service .
+    ```
+
+ - ### Correr conteedor
+    ```
+        docker run -it --name sgil-proveedores-service  sgil-proveedores-service
+    ```
