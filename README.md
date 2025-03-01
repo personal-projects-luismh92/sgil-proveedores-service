@@ -2,13 +2,16 @@
 Sistema de Gestión Integral de Logística y Comercio (SGIL) , backend service
 
 
+### Crear y activar el entorno virtual
+```
+make venv
+```
+
 ### Instalar dependencias
 
 ```
 make install
 ```
-
-
 
 ### Ejecutar el proyecto desde el folder raiz `sgil-proveedores-service`
 ```
@@ -39,7 +42,7 @@ make reset
 
 
 ```
-📂 sgil-compras-service/       # Folder raiz
+📂 sgil-proveedores-service/       # Folder raiz
 │
 │── 📂 app/                    # Contains the main application files
 │   │── 📂 models/             # Modelos SQLAlchemy
