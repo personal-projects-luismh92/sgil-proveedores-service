@@ -46,13 +46,13 @@ make reset
 │
 │── 📂 app/                    # Contains the main application files
 │   │── 📂 models/             # Modelos SQLAlchemy
-│   │── 📂 schemas/            # Esquemas Pydantic
 │   │── 📂 repositories/       # Lógica de acceso a BD
-│   │── 📂 services/           # Lógica de negocio
 │   │── 📂 routers/            # Endpoints de la API
-│   │── 📂 core/               # Configuración del sistema
-│   │   │── database.py        # Configuración de la base de datos
+│   │── 📂 schemas/            # Esquemas Pydantic
+│   │── 📂 services/           # Lógica de negocio
 │   │── main.py                # Punto de entrada de FastAPI
+│── 📂 k8s/                    # Configuración de kubernetes
+│── 📂 Postman/                # Pruebas sobre el servicio
 │── requirements.txt           # Dependencias del proyecto
 │── .env                       # Variables de entorno (si usas PostgreSQL, MySQL, etc.)
 │── alembic/                   # Migraciones de base de datos (opcional)
