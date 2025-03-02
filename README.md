@@ -69,3 +69,21 @@ make reset
     ```
         docker run -it --name sgil-proveedores-service  sgil-proveedores-service
     ```
+
+
+## Docker compose
+
+### 🚀 Ejecutar el proyecto desde docker-compose
+```
+docker-compose up --build
+```
+
+### Eliminar volúmenes y contenedores antiguos 
+```
+docker system prune
+```
+
+### Eliminar los contennedores & volumenes
+```
+docker-compose down -v
+```

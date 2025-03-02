@@ -5,23 +5,24 @@ from common_for_services.database.connection import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.services.proveedor import ProveedorService
 from app.schemas.proveedor import ProveedorSchema
-
+import psutil
 router = APIRouter()
 
 # Health Check Endpoint
-
-
 @router.get("/health")
 async def health_check(db: AsyncSession = Depends(get_db)):
     """Verifica que la API esté funcionando correctamente"""
     try:
-        import psutil
-        cpu_usage = await asyncio.to_thread(psutil.cpu_percent)
-        memory_usage = await asyncio.to_thread(psutil.virtual_memory().percent)
-        return {"status": "ok",
-                "message": "API bodegas funcionando correctamente",
-                "cpu_usage": cpu_usage,
-                "memory_usage": memory_usage}
+        
+        cpu_usage = await asyncio.to_thread(psutil.cpu_percent)  # Call the function
+        memory_usage = await asyncio.to_thread(lambda: psutil.virtual_memory().percent)  # Wrap in lambda
+
+        return {
+            "status": "ok",
+            "message": "API bodegas funcionando correctamente",
+            "cpu_usage": cpu_usage,
+            "memory_usage": memory_usage
+        }
 
     except Exception as e:
         return {"status": "error",
