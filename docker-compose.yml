@@ -24,6 +24,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    networks:
+      - sgil_network
 
   redis:
     image: redis:latest
@@ -36,6 +38,8 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+    networks:
+      - sgil_network
 
   celery-worker:
     build: .
@@ -43,6 +47,9 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - CELERY_ACCEPT_CONTENT=json
+      - CELERY_TASK_SERIALIZER=json
+      - LOGGING_SERVICE_URL=http://sgil-monitoreo-service:8090
     healthcheck:
       test: ["CMD-SHELL", "celery -A celery_worker.celery_config.celery status || exit 1"]
       interval: 30s
@@ -51,8 +58,9 @@ services:
     depends_on:
       redis:
         condition: service_healthy
-      sgil-proveedores-service:
-        condition: service_healthy
+    networks:
+      - sgil_network
+ 
 
   flower:
     build: .
@@ -68,8 +76,9 @@ services:
         condition: service_healthy
       celery-worker:
         condition: service_healthy
-      sgil-proveedores-service:
-        condition: service_healthy
+    
+    networks:
+      - sgil_network
 
 
   postgres:
@@ -90,9 +99,13 @@ services:
       timeout: 20s
       retries: 5
 
+    networks:
+      - sgil_network
+
 
 volumes:
   pg_data:
 
-
-  
+networks:
+  sgil_network:
+    external: true

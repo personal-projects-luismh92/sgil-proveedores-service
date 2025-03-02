@@ -56,12 +56,15 @@ async def obtener_proveedor(proveedor_id: UUID, db: AsyncSession = Depends(get_d
 
 
 @router.post("")
-async def crear_proveedor(proveedor_data: ProveedorSchema, db: AsyncSession = Depends(get_db)):
+async def crear_proveedor(proveedor_data: ProveedorSchema,
+                          db: AsyncSession = Depends(get_db)):
+    """Crea un proveedor"""
     return await ProveedorService.crear(db, proveedor_data)
 
 
 @router.post("error-database")
-async def crear_proveedor_error_db(proveedor_data: ProveedorSchema, db: AsyncSession = Depends(get_db)):
+async def crear_proveedor_error_db(proveedor_data: ProveedorSchema,
+                                   db: AsyncSession = Depends(get_db)):
     """Crea un proveedor con error en la base de datos"""
     return await ProveedorService.crear_error_db(db, proveedor_data)
 

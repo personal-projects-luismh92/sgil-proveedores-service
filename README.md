@@ -70,6 +70,10 @@ make reset
         docker run -it --name sgil-proveedores-service  sgil-proveedores-service
     ```
 
+ - ### Ver las redes disponibles
+    ```
+    docker network ls
+    ```
 
 ## Docker compose
 
