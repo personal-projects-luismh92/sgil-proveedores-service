@@ -74,16 +74,19 @@ make reset
     ```
     docker network ls
     ```
- - ### Crear manualmente la red `sgil_network` antes de correr los contenedores
-    ```
-    docker network create sgil_network
-    ```
+
  - ### Para eliminar una red disponible en Docker, usa el siguiente comando:
     ```
     docker network rm <network_name>
     ```
 
 ## Docker compose
+
+> ⚠️ **IMPORTANTE:** Antes de ejecutar los contenedores con Docker Compose, asegúrate de crear manualmente la red `sgil_network` con:
+> 
+> ```sh
+> docker network create sgil_network
+> ```
 
 ### 🚀 Ejecutar el proyecto desde docker-compose
 ```
