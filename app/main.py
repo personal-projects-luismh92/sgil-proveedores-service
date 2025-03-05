@@ -43,7 +43,7 @@ async def init_db():
                     "celery_worker.tasks.log_to_logging_service_task", args=[log_data])
         celery.send_task(
             "celery_worker.tasks.send_email_task",
-            args=["admin@example.com", "Database Error Alert",
+            args=["Database Error Alert", "La conexión a la base de datos ha fallado al iniciar la aplicación.",
                     json.dumps(log_data, indent=2)]
         )
         logger.critical(
