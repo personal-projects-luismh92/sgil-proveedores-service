@@ -51,3 +51,4 @@ jobs:
           ECR_REPOSITORY: sgil-proveedores-service
           IMAGE_TAG: latest
 
+
