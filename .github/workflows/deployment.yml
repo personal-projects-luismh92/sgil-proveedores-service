@@ -33,7 +33,7 @@ jobs:
       - name: Build, Tag, and Push Docker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: sgil-celery-service
+          ECR_REPOSITORY: sgil-proveedores-service
           IMAGE_TAG: latest
         run: |
           set -ex
