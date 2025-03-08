@@ -1,0 +1,53 @@
+name: CI/Push Docker Image to ECR
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:  # Allows manual execution from GitHub UI
+
+permissions:
+  id-token: write  # Required for OIDC authentication
+  contents: read   # Read access for the repo
+
+jobs:
+  push-to-ecr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: us-east-1  
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+
+      - name: Build, Tag, and Push Docker Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: sgil-celery-service
+          IMAGE_TAG: latest
+        run: |
+          set -ex
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+          # Tag and push as latest
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      - name: Output Image URI
+        run: echo "Pushed Docker image:$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: sgil-proveedores-service
+          IMAGE_TAG: latest
+
