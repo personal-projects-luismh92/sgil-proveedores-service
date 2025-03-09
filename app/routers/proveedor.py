@@ -70,7 +70,7 @@ async def crear_proveedor_error_db(proveedor_data: ProveedorSchema,
 
 
 @router.put("/{proveedor_id}")
-async def actualizar_proveedor(proveedor_id: int,
+async def actualizar_proveedor(proveedor_id: UUID,
                                proveedor_data: ProveedorUpdateSchema,
                                db: AsyncSession = Depends(get_db)):
     """ Actualiza un proveedor """
