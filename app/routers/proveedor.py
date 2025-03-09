@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from common_for_services.database.connection import get_db
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.services.proveedor import ProveedorService
-from app.schemas.proveedor import ProveedorSchema
+from app.schemas.proveedor import ProveedorSchema, ProveedorUpdateSchema
 import psutil
 router = APIRouter()
 
@@ -70,7 +70,10 @@ async def crear_proveedor_error_db(proveedor_data: ProveedorSchema,
 
 
 @router.put("/{proveedor_id}")
-async def actualizar_proveedor(proveedor_id: int, proveedor_data: ProveedorSchema, db: AsyncSession = Depends(get_db)):
+async def actualizar_proveedor(proveedor_id: int,
+                               proveedor_data: ProveedorUpdateSchema,
+                               db: AsyncSession = Depends(get_db)):
+    """ Actualiza un proveedor """
     proveedor_actualizado = await ProveedorService.actualizar(
         db, proveedor_id, proveedor_data)
     if not proveedor_actualizado:
@@ -79,7 +82,9 @@ async def actualizar_proveedor(proveedor_id: int, proveedor_data: ProveedorSchem
 
 
 @router.delete("/{proveedor_id}")
-async def eliminar_proveedor(proveedor_id: int, db: AsyncSession = Depends(get_db)):
+async def eliminar_proveedor(proveedor_id: int,
+                             db: AsyncSession = Depends(get_db)):
+    """ Elimina un proveedor """
     if not await ProveedorService.eliminar(db, proveedor_id):
         raise HTTPException(status_code=404, detail="Proveedor no encontrado")
     return {"message": "Proveedor eliminado"}
