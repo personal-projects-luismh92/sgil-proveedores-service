@@ -34,20 +34,20 @@ class Proveedor(Base):
         index=True,
         comment="Correo electrónico de contacto"
     )
-    telefono = Column(
-        String(20),
-        nullable=True,
-        comment="Número de teléfono del proveedor"
-    )
     direccion = Column(
         Text,
         nullable=True,
         comment="Dirección física del proveedor"
     )
-    sitio_web = Column(
+    pais = Column(
         String(255),
         nullable=True,
-        comment="Sitio web del proveedor"
+        comment="Pais del proveedor"
+    )
+    ciudad = Column(
+        String(255),
+        nullable=True,
+        comment="Ciudad del proveedor"
     )
     fecha_creacion = Column(
         DateTime,
