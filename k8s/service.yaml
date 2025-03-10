@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: clientes-service
+  name: sgil-proveedores-service
   namespace: default
 spec:
   selector:
-    app: clientes
+    app: proveedores
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8002
+      targetPort: 8005
   type: ClusterIP 
