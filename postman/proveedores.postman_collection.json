@@ -1,19 +1,19 @@
 {
 	"info": {
-		"_postman_id": "89d004f9-7437-41c6-accd-2af4e0b2c464",
+		"_postman_id": "05b37a16-2270-4289-ac01-233e66df6892",
 		"name": "proveedores",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "41099583"
 	},
 	"item": [
 		{
-			"name": "Crear",
+			"name": "Crear Proveedor 1 exitoso",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"identificacion\": \"123456789565\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contacto@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}\n",
+					"raw": "{\n    \"identificacion\": \"290809804564\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactoasaa@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -25,13 +25,13 @@
 			"response": []
 		},
 		{
-			"name": "Crear Proveedor 2",
+			"name": "Crear Proveedor 2 exitoso",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"550e8400-e29b-41d4-a716-446655440000\",\n    \"identificacion\": \"12345678934\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactdsdo@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\",\n    \"fecha_creacion\": \"2024-02-22T12:34:56.789Z\"\n}\n",
+					"raw": "{\n    \"identificacion\": \"123456789341\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactdsdao@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\",\n    \"fecha_creacion\": \"2024-02-22T12:34:56.789Z\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -43,7 +43,7 @@
 			"response": []
 		},
 		{
-			"name": "Crear Proveedor 3",
+			"name": "Crear Proveedor 3 exitoso",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -61,7 +61,7 @@
 			"response": []
 		},
 		{
-			"name": "Crear Proveedor 4",
+			"name": "Crear Proveedor 4 exitoso",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -79,7 +79,7 @@
 			"response": []
 		},
 		{
-			"name": "Crear Proveedor 5",
+			"name": "Crear Proveedor 5 exitoso",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -97,7 +97,7 @@
 			"response": []
 		},
 		{
-			"name": "Crear Proveedor 6",
+			"name": "Crear Proveedor 6 exitoso",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -143,6 +143,177 @@
 				"url": "{{base_url}}/74165276-6607-4df0-a4de-f3b29eedd350"
 			},
 			"response": []
+		},
+		{
+			"name": "Crear Proveedor sin correo",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"fecha_creacion\": \"2025-03-02T02:19:18.240434\",\n    \"identificacion\": \"123456789565\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"id\": \"815e7c39-9cae-49f8-ac18-9f0cbffebcb9\",\n    \"telefono\": \"1234567890\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor sin nombre",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"123456789565\",\n    \"correo\": \"contacto@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor sin Identificación",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contacto@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor sin Telefono",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"654321\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactoq@techsupplies.com\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor sin dirección",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"21\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactods@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor sin Sitio WEB",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"2124234\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contacto12345@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor con Letras en identificación",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"221133456a\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contacto1234567@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor con letras en el telefono",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"123432442\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contac@techsupplies.com\",\n    \"telefono\": \"1234567890a\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Proveedor  para forzar error en la base de datos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"A12345678\",\n    \"nombre\": \"Office Plus S.A.\",\n    \"correo\": \"info@officeplus.com\",\n    \"telefono\": \"5551234567\",\n    \"direccion\": \"Calle Comercio 789, CDMX, México\",\n    \"sitio_web\": \"https://www.officeplus.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/error-database"
+			},
+			"response": []
+		},
+		{
+			"name": "Estado del API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{base_url}}/health"
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -171,6 +342,12 @@
 		{
 			"key": "base_url",
 			"value": "http://localhost:8005/proveedores",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost/proveedores",
 			"type": "string"
 		}
 	]

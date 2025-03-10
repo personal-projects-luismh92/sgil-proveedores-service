@@ -66,6 +66,7 @@ class RepositorioProveedor:
     @staticmethod
     async def crear_error_db(db: AsyncSession, proveedor_data: ProveedorSchema):
         """Crea un nuevo proveedor de forma asíncrona con error"""
+        proveedor_data.identificacion = None
         nuevo_proveedor = Proveedor(**proveedor_data.model_dump())
         db.add(nuevo_proveedor)
         await db.commit()
