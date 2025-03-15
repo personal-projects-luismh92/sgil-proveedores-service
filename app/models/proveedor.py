@@ -8,12 +8,16 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from common_for_services.database.connection import Base
 
+
 class Proveedor(Base):
     """Modelo de Proveedor en el servicio de proveedores"""
     __tablename__ = "proveedor"
 
     id = Column(UUID(as_uuid=True), primary_key=True,
                 default=uuid.uuid4, nullable=False)
+    tipo_identificacion = Column(String(10),
+                                 nullable=False,
+                                 comment="Tipo de identificación fiscal o comercial (NIT, RFC, RUC, etc.)")
     identificacion = Column(
         String(50),
         unique=True,
@@ -30,7 +34,7 @@ class Proveedor(Base):
     correo = Column(
         String(255),
         unique=True,
-        nullable=True,
+        nullable=False,
         index=True,
         comment="Correo electrónico de contacto"
     )
