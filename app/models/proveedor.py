@@ -63,8 +63,6 @@ class Proveedor(Base):
     __table_args__ = (
         CheckConstraint("correo LIKE '%@%.%' OR correo IS NULL",
                         name="check_correo_format"),
-        CheckConstraint("LENGTH(telefono) >= 7 OR telefono IS NULL",
-                        name="check_telefono_length"),
         CheckConstraint(
             "LENGTH(identificacion) >= 6 AND identificacion NOT LIKE ' %'", name="check_identificacion"),
     )

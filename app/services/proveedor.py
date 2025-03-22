@@ -4,6 +4,7 @@ from app.schemas.proveedor import ProveedorSchema, ProveedorUpdateSchema
 
 
 class ProveedorService:
+    """ Servicio de proveedores """
     @staticmethod
     async def obtener_todos(db: AsyncSession, page: int, per_page: int):
         """ Obtiene todos los proveedores """

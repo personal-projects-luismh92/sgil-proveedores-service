@@ -49,6 +49,7 @@ async def obtener_proveedores(request: Request, db: AsyncSession = Depends(get_d
 
 @router.get("/{proveedor_id}")
 async def obtener_proveedor(proveedor_id: UUID, db: AsyncSession = Depends(get_db)):
+    """ Obtiene un proveedor por su id """
     proveedor = await ProveedorService.obtener_por_id(db, proveedor_id)
     if not proveedor:
         raise HTTPException(status_code=404, detail="Proveedor no encontrado")
