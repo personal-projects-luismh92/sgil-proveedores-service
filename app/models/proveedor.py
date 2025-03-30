@@ -15,24 +15,24 @@ class Proveedor(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True,
                 default=uuid.uuid4, nullable=False)
-    tipo_identificacion = Column(String(10),
+    tipo_identificacion = Column(String(100),
                                  nullable=False,
                                  comment="Tipo de identificación fiscal o comercial (NIT, RFC, RUC, etc.)")
     identificacion = Column(
-        String(50),
+        String(15),
         unique=True,
         nullable=False,
         index=True,
         comment="Número de identificación fiscal o comercial (NIT, RFC, RUC, etc.)"
     )
     nombre = Column(
-        String(100),
+        String(50),
         nullable=False,
         index=True,
         comment="Nombre de la empresa proveedora"
     )
     correo = Column(
-        String(255),
+        String(50),
         unique=True,
         nullable=False,
         index=True,
@@ -44,12 +44,12 @@ class Proveedor(Base):
         comment="Dirección física del proveedor"
     )
     pais = Column(
-        String(255),
+        String(30),
         nullable=True,
         comment="Pais del proveedor"
     )
     ciudad = Column(
-        String(255),
+        String(30),
         nullable=True,
         comment="Ciudad del proveedor"
     )
