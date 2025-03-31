@@ -1,0 +1,78 @@
+name: CI/Push Docker Image to ECR
+
+on:
+  push:
+    branches:
+      - develop
+  workflow_dispatch:  # Allows manual execution from GitHub UI
+
+permissions:
+  id-token: write  # Required for OIDC authentication
+  contents: read   # Read access for the repo
+
+env:
+  AWS_REGION: us-east-1
+  EKS_CLUSTER_NAME: miso-eks-cluster
+  ECR_REPOSITORY: sgil-proveedores-service  # Ensure this ECR repo exists
+  IMAGE_TAG: latest
+
+jobs:
+  push-to-ecr:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov  # Ensure testing dependencies are installed
+
+      - name: Run Tests with Coverage
+        run: |
+          source venv/bin/activate
+          pytest --cov=app --cov-report=term-missing
+
+      - name: Clean Up Virtual Environment
+        run: rm -rf venv
+
+      - name: Configure AWS Credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          mask-password: true
+
+      - name: Build, Tag, and Push Docker Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          
+        run: |
+          set -ex
+          echo "Building Docker image..."
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          
+          echo "Tagging Docker image..."
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+          echo "Pushing Docker image to ECR..."
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Output Image URI
+        run: echo "Pushed Docker image:$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
