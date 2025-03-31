@@ -5,7 +5,7 @@ PIP=$(VENV_DIR)/bin/pip
 
 # Crear y activar el entorno virtual
 venv:
-	python3 -m venv $(VENV_DIR)
+	python3.12 -m venv $(VENV_DIR)
 	$(PIP) install --upgrade pip --extra-index-url https://pypi.org/simple
 
 # Instalar dependencias
@@ -22,7 +22,7 @@ run:
 
 # Ejecutar pruebas con pytest
 test:
-	pytest -v
+	pytest --cov=app --cov-report=term-missing
 
 # Formatear código con Black
 format:

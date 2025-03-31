@@ -62,16 +62,6 @@ class RepositorioProveedor:
         await db.commit()
         await db.refresh(nuevo_proveedor)
         return nuevo_proveedor
-    
-    @staticmethod
-    async def crear_error_db(db: AsyncSession, proveedor_data: ProveedorSchema):
-        """Crea un nuevo proveedor de forma asíncrona con error"""
-        proveedor_data.identificacion = None
-        nuevo_proveedor = Proveedor(**proveedor_data.model_dump())
-        db.add(nuevo_proveedor)
-        await db.commit()
-        await db.refresh(nuevo_proveedor)
-        return nuevo_proveedor
 
     @staticmethod
     async def actualizar(db: AsyncSession, proveedor_id: int, proveedor_data: ProveedorSchema):
