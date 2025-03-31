@@ -20,10 +20,6 @@ class ProveedorService:
         """ Crea un proveedor """
         return await RepositorioProveedor.crear(db, proveedor_data)
 
-    @staticmethod
-    async def crear_error_db(db: AsyncSession, proveedor_data: ProveedorSchema):
-        """ Crea un proveedor con error en la base de datos """
-        return await RepositorioProveedor.crear_error_db(db, proveedor_data)
 
     @staticmethod
     async def actualizar(db: AsyncSession,
