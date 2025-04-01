@@ -6,9 +6,11 @@ from sqlalchemy import func
 from fastapi import Query
 from app.models.proveedor import Proveedor
 from app.schemas.proveedor import ProveedorSchema
+from uuid import UUID
 
 
 class RepositorioProveedor:
+    """  Repositorio de proveedores """
     @staticmethod
     async def obtener_todos(db: AsyncSession,
                             page: Optional[int] = Query(
@@ -20,7 +22,7 @@ class RepositorioProveedor:
         # Count the rows by the 'id' column
         count_query = select(func.count(Proveedor.id))
         result = await db.execute(count_query)
-        total_rows = result.scalar()  # Get the count of rows
+        total_rows = result.scalar()
 
         # Base query for getting rows
         query = select(Proveedor)
@@ -34,7 +36,7 @@ class RepositorioProveedor:
 
         # Execute the query to fetch the results
         result = await db.execute(query)
-        data = result.scalars().all()  # Get the results as a list
+        data = result.scalars().all()
 
         # Prepare the response
         response = {
@@ -49,7 +51,7 @@ class RepositorioProveedor:
         return response
 
     @staticmethod
-    async def obtener_por_id(db: AsyncSession, proveedor_id: int):
+    async def obtener_por_id(db: AsyncSession, proveedor_id: UUID):
         """Obtiene un proveedor por su ID de forma asíncrona"""
         result = await db.execute(select(Proveedor).filter_by(id=proveedor_id))
         return result.scalars().first()
@@ -62,26 +64,3 @@ class RepositorioProveedor:
         await db.commit()
         await db.refresh(nuevo_proveedor)
         return nuevo_proveedor
-
-    @staticmethod
-    async def actualizar(db: AsyncSession, proveedor_id: int, proveedor_data: ProveedorSchema):
-        """Actualiza un proveedor existente de forma asíncrona"""
-        result = await db.execute(select(Proveedor).filter_by(id=proveedor_id))
-        proveedor = result.scalars().first()
-        if proveedor:
-            for key, value in proveedor_data.model_dump().items():
-                setattr(proveedor, key, value)
-            await db.commit()
-            await db.refresh(proveedor)
-        return proveedor
-
-    @staticmethod
-    async def eliminar(db: AsyncSession, proveedor_id: int):
-        """Elimina un proveedor por su ID de forma asíncrona"""
-        result = await db.execute(select(Proveedor).filter_by(id=proveedor_id))
-        proveedor = result.scalars().first()
-        if proveedor:
-            await db.delete(proveedor)
-            await db.commit()
-            return True
-        return False
