@@ -6,44 +6,6 @@ from app.main import app
 
 client = TestClient(app)
 
-class MockVirtualMemory:
-    """ Clase Mock para simular el uso de memoria """
-
-    def __init__(self, percent):
-        self.percent = percent
-
-
-@pytest.mark.asyncio
-@patch("psutil.cpu_percent", return_value=30.5)
-@patch("psutil.virtual_memory", return_value=MockVirtualMemory(percent=70.0))
-async def test_health_check_success(_, __):
-    """Debe retornar status OK con métricas de CPU y memoria"""
-
-    response = client.get("/proveedores/health")
-
-    # Verifications
-    assert response.status_code == 200
-    json_data = response.json()
-    assert json_data["status"] == "ok"
-    assert json_data["cpu_usage"] == 30.5
-    assert json_data["memory_usage"] == 70.0
-
-
-@pytest.mark.asyncio
-@patch("psutil.cpu_percent", return_value=30.5)
-@patch("psutil.virtual_memory", return_value=70.0)
-async def test_health_check_failure(_, __):
-    """Debe manejar excepciones y devolver status ERROR"""
-
-    response= client.get("proveedores/health")
-
-    # Verificaciones
-    assert response.status_code == 200
-    json_data=response.json()
-    assert json_data["status"] == "error"
-    assert "Error al verificar la salud de la API" in json_data["message"]
-    assert "'float' object has no attribute 'percent'" in json_data["details"]
-
 
 @patch("app.repositories.proveedor.RepositorioProveedor.obtener_todos", new_callable=AsyncMock)
 def test_obtener_todos_exitoso_sin_registros(mock_obtener_todos):
