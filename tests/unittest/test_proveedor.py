@@ -45,7 +45,7 @@ async def test_health_check_failure(_, __):
     assert "'float' object has no attribute 'percent'" in json_data["details"]
 
 
-@ patch("app.repositories.proveedor.RepositorioProveedor.obtener_todos", new_callable=AsyncMock)
+@patch("app.repositories.proveedor.RepositorioProveedor.obtener_todos", new_callable=AsyncMock)
 def test_obtener_todos_exitoso_sin_registros(mock_obtener_todos):
     """Test obtener todos los proveedores de manera exitosa con 0 registros."""
     mock_obtener_todos.return_value={
