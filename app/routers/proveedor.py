@@ -61,24 +61,3 @@ async def crear_proveedor(proveedor_data: ProveedorSchema,
                           db: AsyncSession = Depends(get_db)):
     """Crea un proveedor"""
     return await ProveedorService.crear(db, proveedor_data)
-
-
-@router.put("/{proveedor_id}")
-async def actualizar_proveedor(proveedor_id: UUID,
-                               proveedor_data: ProveedorUpdateSchema,
-                               db: AsyncSession = Depends(get_db)):
-    """ Actualiza un proveedor """
-    proveedor_actualizado = await ProveedorService.actualizar(
-        db, proveedor_id, proveedor_data)
-    if not proveedor_actualizado:
-        raise HTTPException(status_code=404, detail="Proveedor no encontrado")
-    return proveedor_actualizado
-
-
-@router.delete("/{proveedor_id}")
-async def eliminar_proveedor(proveedor_id: int,
-                             db: AsyncSession = Depends(get_db)):
-    """ Elimina un proveedor """
-    if not await ProveedorService.eliminar(db, proveedor_id):
-        raise HTTPException(status_code=404, detail="Proveedor no encontrado")
-    return {"message": "Proveedor eliminado"}
