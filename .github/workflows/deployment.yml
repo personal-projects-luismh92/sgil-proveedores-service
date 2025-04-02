@@ -40,7 +40,7 @@ jobs:
       - name: Run Tests with Coverage
         run: |
           source venv/bin/activate
-          pytest --cov=app --cov-report=term-missing
+          pytest --cov-report=term-missing
 
       - name: Clean Up Virtual Environment
         run: rm -rf venv
