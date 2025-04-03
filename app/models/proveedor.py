@@ -40,17 +40,17 @@ class Proveedor(Base):
     )
     direccion = Column(
         Text,
-        nullable=True,
+        nullable=False,
         comment="Dirección física del proveedor"
     )
     pais = Column(
         String(30),
-        nullable=True,
+        nullable=False,
         comment="Pais del proveedor"
     )
     ciudad = Column(
         String(30),
-        nullable=True,
+        nullable=False,
         comment="Ciudad del proveedor"
     )
     fecha_creacion = Column(
