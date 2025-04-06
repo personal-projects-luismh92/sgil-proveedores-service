@@ -7,6 +7,10 @@ from fastapi import Query
 from app.models.proveedor import Proveedor
 from app.schemas.proveedor import ProveedorSchema
 from uuid import UUID
+from fastapi import HTTPException
+from sqlalchemy.exc import IntegrityError
+import logging
+logger = logging.getLogger(__name__)
 
 
 class RepositorioProveedor:
@@ -59,8 +63,28 @@ class RepositorioProveedor:
     @staticmethod
     async def crear(db: AsyncSession, proveedor_data: ProveedorSchema):
         """Crea un nuevo proveedor de forma asíncrona"""
-        nuevo_proveedor = Proveedor(**proveedor_data.model_dump())
-        db.add(nuevo_proveedor)
-        await db.commit()
-        await db.refresh(nuevo_proveedor)
-        return nuevo_proveedor
+        try:
+            nuevo_proveedor = Proveedor(**proveedor_data.model_dump())
+            db.add(nuevo_proveedor)
+            await db.commit()
+            await db.refresh(nuevo_proveedor)
+            return nuevo_proveedor
+
+        except IntegrityError as e:
+            await db.rollback()
+
+            if 'UniqueViolationError' in str(e):
+                raise HTTPException(
+                    status_code=409,
+                    detail="Ya existe un proveedor registrado con los datos ingresado. Por favor, utiliza uno diferente."
+                )
+
+            raise HTTPException(
+                status_code=400,
+                detail="Error de integridad al crear el proveedor."
+            )
+        except Exception as _:
+            await db.rollback()
+            raise HTTPException(
+                status_code=400,
+                detail="Error al crear el proveedor.")
