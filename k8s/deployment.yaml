@@ -27,7 +27,7 @@ spec:
             - name: DB_PASSWORD
               value: "postgres"
             - name: DB_PORT
-              value: "5432"
+              value: 5432
             - name: PROMETHEUS_MULTIPROC_DIR
               value: "/tmp"
             - name: CELERY_BROKER_URL
