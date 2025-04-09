@@ -87,7 +87,7 @@ jobs:
             kubectl apply -f k8s/deployment.yaml && \
             kubectl apply -f k8s/service.yaml && \
             echo "Restarting deployment..."
-            kubectl rollout restart deployment inventario
+            kubectl rollout restart deployment proveedores
 
           else
             echo "Error: Kubernetes directory 'k8s' not found."
