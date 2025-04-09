@@ -81,10 +81,13 @@ jobs:
         run: aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
 
       - name: Deploy to EKS
+        env:
+          DB_HOST_URL: ${{ secrets.DB_HOST_URL }}
         run: |
           if [ -d "k8s" ]; then
             echo "Applying Kubernetes manifests..."
-            kubectl apply -f k8s/deployment.yaml && \
+            export DB_HOST_URL=$DB_HOST_URL
+            envsubst < k8s/deployment.yaml | kubectl apply -f - && \
             kubectl apply -f k8s/service.yaml && \
             echo "Restarting deployment..."
             kubectl rollout restart deployment proveedores
