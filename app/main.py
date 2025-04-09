@@ -62,7 +62,6 @@ app.add_middleware(
     CORSMiddleware,
     # Cambia esto por los dominios permitidos en producción
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
