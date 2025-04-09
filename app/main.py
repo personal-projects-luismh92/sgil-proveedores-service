@@ -16,17 +16,16 @@ logger = logging.getLogger("main_app")
 
 # Crear todas las tablas en la base de datos (si no existen)
 
-DB_HOST_URL = os.environ.get("DB_HOST_URL")
-DB_NAME = os.environ.get("DB_NAME")
-DB_USER = os.environ.get("DB_USER")
-DB_PASSWORD = os.environ.get("DB_PASSWORD")
-print(DB_HOST_URL)
-print(DB_NAME)
-print(DB_USER)
-print(DB_PASSWORD)
-
 async def init_db():
     """ Crear todas las tablas en la base de datos (si no existen) """
+    DB_HOST_URL = os.environ.get("DB_HOST_URL")
+    DB_NAME = os.environ.get("DB_NAME")
+    DB_USER = os.environ.get("DB_USER")
+    DB_PASSWORD = os.environ.get("DB_PASSWORD")
+    print(DB_HOST_URL)
+    print(DB_NAME)
+    print(DB_USER)
+    print(DB_PASSWORD)
     start_time = time.time()
     try:
         async with engine.begin() as conn:
