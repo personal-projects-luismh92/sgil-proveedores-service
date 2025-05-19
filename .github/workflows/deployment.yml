@@ -4,11 +4,17 @@ on:
   push:
     branches:
       - develop
-  workflow_dispatch:  # Allows manual execution from GitHub UI
+  workflow_dispatch: # Allows manual execution from GitHub UI
 
 permissions:
-  id-token: write  # Required for OIDC authentication
-  contents: read   # Read access for the repo
+  id-token: write # Required for OIDC authentication
+  contents: read # Read access for the repo
+
+env:
+  AWS_REGION: us-east-1
+  EKS_CLUSTER_NAME: miso-eks-cluster
+  ECR_REPOSITORY: sgil-proveedores-service # Ensure this ECR repo exists
+  IMAGE_TAG: latest
 
 jobs:
   push-to-ecr:
@@ -18,11 +24,32 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov  # Ensure testing dependencies are installed
+
+      - name: Run Tests with Coverage
+        run: |
+          source venv/bin/activate
+          pytest --cov-report=term-missing
+
+      - name: Clean Up Virtual Environment
+        run: rm -rf venv
+
       - name: Configure AWS Credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v2
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
-          aws-region: us-east-1  
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -33,20 +60,39 @@ jobs:
       - name: Build, Tag, and Push Docker Image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: sgil-proveedores-service
-          IMAGE_TAG: latest
+
         run: |
           set -ex
+          echo "Building Docker image..."
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-          # Tag and push as latest
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          echo "Tagging Docker image..."
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+          echo "Pushing Docker image to ECR..."
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Output Image URI
         run: echo "Pushed Docker image:$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: sgil-proveedores-service
-          IMAGE_TAG: latest
+
+      - name: Update Kubeconfig
+        run: aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
+
+      - name: Deploy to EKS
+        env:
+          DB_HOST_URL: ${{ secrets.DB_HOST_URL }}
+        run: |
+          if [ -d "k8s" ]; then
+            echo "Applying Kubernetes manifests..."
+            export DB_HOST_URL=$DB_HOST_URL
+            envsubst < k8s/deployment.yaml | kubectl apply -f - && \
+            kubectl apply -f k8s/service.yaml && \
+            echo "Restarting deployment..."
+            kubectl rollout restart deployment proveedores
+
+          else
+            echo "Error: Kubernetes directory 'k8s' not found."
+            exit 1
+          fi

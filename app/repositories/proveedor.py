@@ -6,9 +6,15 @@ from sqlalchemy import func
 from fastapi import Query
 from app.models.proveedor import Proveedor
 from app.schemas.proveedor import ProveedorSchema
+from uuid import UUID
+from fastapi import HTTPException
+from sqlalchemy.exc import IntegrityError
+import logging
+logger = logging.getLogger(__name__)
 
 
 class RepositorioProveedor:
+    """  Repositorio de proveedores """
     @staticmethod
     async def obtener_todos(db: AsyncSession,
                             page: Optional[int] = Query(
@@ -20,7 +26,7 @@ class RepositorioProveedor:
         # Count the rows by the 'id' column
         count_query = select(func.count(Proveedor.id))
         result = await db.execute(count_query)
-        total_rows = result.scalar()  # Get the count of rows
+        total_rows = result.scalar()
 
         # Base query for getting rows
         query = select(Proveedor)
@@ -34,7 +40,7 @@ class RepositorioProveedor:
 
         # Execute the query to fetch the results
         result = await db.execute(query)
-        data = result.scalars().all()  # Get the results as a list
+        data = result.scalars().all()
 
         # Prepare the response
         response = {
@@ -49,7 +55,7 @@ class RepositorioProveedor:
         return response
 
     @staticmethod
-    async def obtener_por_id(db: AsyncSession, proveedor_id: int):
+    async def obtener_por_id(db: AsyncSession, proveedor_id: UUID):
         """Obtiene un proveedor por su ID de forma asíncrona"""
         result = await db.execute(select(Proveedor).filter_by(id=proveedor_id))
         return result.scalars().first()
@@ -57,41 +63,28 @@ class RepositorioProveedor:
     @staticmethod
     async def crear(db: AsyncSession, proveedor_data: ProveedorSchema):
         """Crea un nuevo proveedor de forma asíncrona"""
-        nuevo_proveedor = Proveedor(**proveedor_data.model_dump())
-        db.add(nuevo_proveedor)
-        await db.commit()
-        await db.refresh(nuevo_proveedor)
-        return nuevo_proveedor
-    
-    @staticmethod
-    async def crear_error_db(db: AsyncSession, proveedor_data: ProveedorSchema):
-        """Crea un nuevo proveedor de forma asíncrona con error"""
-        proveedor_data.identificacion = None
-        nuevo_proveedor = Proveedor(**proveedor_data.model_dump())
-        db.add(nuevo_proveedor)
-        await db.commit()
-        await db.refresh(nuevo_proveedor)
-        return nuevo_proveedor
-
-    @staticmethod
-    async def actualizar(db: AsyncSession, proveedor_id: int, proveedor_data: ProveedorSchema):
-        """Actualiza un proveedor existente de forma asíncrona"""
-        result = await db.execute(select(Proveedor).filter_by(id=proveedor_id))
-        proveedor = result.scalars().first()
-        if proveedor:
-            for key, value in proveedor_data.model_dump().items():
-                setattr(proveedor, key, value)
+        try:
+            nuevo_proveedor = Proveedor(**proveedor_data.model_dump())
+            db.add(nuevo_proveedor)
             await db.commit()
-            await db.refresh(proveedor)
-        return proveedor
+            await db.refresh(nuevo_proveedor)
+            return nuevo_proveedor
 
-    @staticmethod
-    async def eliminar(db: AsyncSession, proveedor_id: int):
-        """Elimina un proveedor por su ID de forma asíncrona"""
-        result = await db.execute(select(Proveedor).filter_by(id=proveedor_id))
-        proveedor = result.scalars().first()
-        if proveedor:
-            await db.delete(proveedor)
-            await db.commit()
-            return True
-        return False
+        except IntegrityError as e:
+            await db.rollback()
+
+            if 'UniqueViolationError' in str(e):
+                raise HTTPException(
+                    status_code=409,
+                    detail="Ya existe un proveedor registrado con los datos ingresado. Por favor, utiliza uno diferente."
+                )
+
+            raise HTTPException(
+                status_code=400,
+                detail="Error de integridad al crear el proveedor."
+            )
+        except Exception as _:
+            await db.rollback()
+            raise HTTPException(
+                status_code=400,
+                detail="Error al crear el proveedor.")

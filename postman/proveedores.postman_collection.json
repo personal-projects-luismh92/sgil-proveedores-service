@@ -8,12 +8,47 @@
 	"item": [
 		{
 			"name": "Crear Proveedor 1 exitoso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200, 201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is below 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response contains valid UUID as ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"",
+							"    // Regular expression to match a valid UUID (v4)",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"",
+							"    pm.expect(jsonData.id).to.match(uuidRegex);",
+							"});",
+							"",
+							"pm.test(\"Response contains the correct provider name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.nombre).to.equal(\"Tech Supplies Inc.\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"identificacion\": \"290809804564\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactoasaa@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}\n",
+					"raw": "{\n    \"tipo_identificacion\": \"Cedula de ciudadania\",\n    \"identificacion\": \"290809804564\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactoasaa@techsupplies.com\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"pais\": \"COLOMBIA\",\n    \"ciudad\":\"BARRANQUILLA\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -26,12 +61,47 @@
 		},
 		{
 			"name": "Crear Proveedor 2 exitoso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200, 201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is below 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response contains valid UUID as ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"",
+							"    // Regular expression to match a valid UUID (v4)",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"",
+							"    pm.expect(jsonData.id).to.match(uuidRegex);",
+							"});",
+							"",
+							"pm.test(\"Response contains the correct provider name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.nombre).to.equal(\"Tech Supplies Inc 2.\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"identificacion\": \"123456789341\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactdsdao@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\",\n    \"fecha_creacion\": \"2024-02-22T12:34:56.789Z\"\n}\n",
+					"raw": "{\n    \"tipo_identificacion\": \"Cedula de extranjeria\",\n    \"identificacion\": \"123456789341\",\n    \"nombre\": \"Tech Supplies Inc 2.\",\n    \"correo\": \"contactdsdao@techsupplies.com\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"pais\": \"COLOMBIA\",\n    \"ciudad\": \"BARRANQUILLA\",\n    \"fecha_creacion\": \"2024-02-22T12:34:56.789Z\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,12 +114,46 @@
 		},
 		{
 			"name": "Crear Proveedor 3 exitoso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200, 201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is below 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response contains valid UUID as ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"",
+							"    // Regular expression to match a valid UUID (v4)",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"",
+							"    pm.expect(jsonData.id).to.match(uuidRegex);",
+							"});",
+							"",
+							"pm.test(\"Response contains the correct provider name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.nombre).to.equal(\"Meditech Solutions\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"identificacion\": \"987654321\",\n    \"nombre\": \"Meditech Solutions\",\n    \"correo\": \"ventas@meditech.com\",\n    \"telefono\": \"3124567890\",\n    \"direccion\": \"Av. Salud 45, Bogotá, Colombia\",\n    \"sitio_web\": \"https://www.meditech.com\"\n}\n",
+					"raw": "{   \n    \"tipo_identificacion\": \"Cedula de extranjeria\",\n    \"identificacion\": \"987654321\",\n    \"nombre\": \"Meditech Solutions\",\n    \"correo\": \"ventas@meditech.com\",\n    \"direccion\": \"Av. Salud 45, Bogotá, Colombia\",\n    \"pais\": \"COLOMBIA\",\n    \"ciudad\": \"BARRANQUILLA\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -62,12 +166,46 @@
 		},
 		{
 			"name": "Crear Proveedor 4 exitoso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200, 201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is below 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response contains valid UUID as ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"",
+							"    // Regular expression to match a valid UUID (v4)",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"",
+							"    pm.expect(jsonData.id).to.match(uuidRegex);",
+							"});",
+							"",
+							"pm.test(\"Response contains the correct provider name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.nombre).to.equal(\"Office Plus S.A.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"identificacion\": \"A12345678\",\n    \"nombre\": \"Office Plus S.A.\",\n    \"correo\": \"info@officeplus.com\",\n    \"telefono\": \"5551234567\",\n    \"direccion\": \"Calle Comercio 789, CDMX, México\",\n    \"sitio_web\": \"https://www.officeplus.com\"\n}\n",
+					"raw": "{\n    \"tipo_identificacion\": \"Cedula de extranjeria\",\n    \"identificacion\": \"A12345678\",\n    \"nombre\": \"Office Plus S.A.\",\n    \"correo\": \"info@officeplus.com\",\n    \"direccion\": \"Calle Comercio 789, CDMX, México\",\n    \"pais\": \"COLOMBIA\",\n    \"ciudad\": \"BARRANQUILLA\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -80,12 +218,46 @@
 		},
 		{
 			"name": "Crear Proveedor 5 exitoso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200, 201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is below 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response contains valid UUID as ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"",
+							"    // Regular expression to match a valid UUID (v4)",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"",
+							"    pm.expect(jsonData.id).to.match(uuidRegex);",
+							"});",
+							"",
+							"pm.test(\"Response contains the correct provider name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.nombre).to.equal(\"Innovatech Global\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"identificacion\": \"XYZ-7654321\",\n    \"nombre\": \"Innovatech Global\",\n    \"correo\": \"support@innovatech.com\",\n    \"telefono\": \"18005551234\",\n    \"direccion\": \"123 Silicon Valley, CA, USA\",\n    \"sitio_web\": \"https://www.innovatech.com\"\n}\n\n",
+					"raw": "{   \n    \"tipo_identificacion\": \"Cedula de extranjeria\",\n    \"identificacion\": \"XYZ-7654321\",\n    \"nombre\": \"Innovatech Global\",\n    \"correo\": \"support@innovatech.com\",\n    \"direccion\": \"123 Silicon Valley, CA, USA\",\n    \"pais\": \"COLOMBIA\",\n    \"ciudad\": \"BARRANQUILLA\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -98,12 +270,46 @@
 		},
 		{
 			"name": "Crear Proveedor 6 exitoso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200, 201);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response time is below 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"pm.test(\"Response contains valid UUID as ID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"id\");",
+							"",
+							"    // Regular expression to match a valid UUID (v4)",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"",
+							"    pm.expect(jsonData.id).to.match(uuidRegex);",
+							"});",
+							"",
+							"pm.test(\"Response contains the correct provider name\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.nombre).to.equal(\"Tech Supplies Inc.\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"identificacion\": \"123456789565\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"camilo@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}\n",
+					"raw": "{\n    \"tipo_identificacion\": \"Numero identificación tributaria (NIT)\",\n    \"identificacion\": \"123456789565\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"camilo@techsupplies.com\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"pais\": \"COLOMBIA\",\n    \"ciudad\": \"BARRANQUILLA\"\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -116,6 +322,66 @@
 		},
 		{
 			"name": "Listar",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response is successful\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Validate response structure",
+							"pm.test(\"Response has required fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.have.property(\"data\").that.is.an(\"array\");",
+							"    pm.expect(jsonData).to.have.property(\"totalRows\").that.is.a(\"number\");",
+							"    pm.expect(jsonData).to.have.property(\"totalPages\").that.is.a(\"number\");",
+							"});",
+							"",
+							"// Validate totalRows and totalPages",
+							"pm.test(\"Total rows and pages are correct\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.data.length).to.eql(jsonData.totalRows);",
+							"    pm.expect(jsonData.totalPages).to.be.greaterThan(0);",
+							"});",
+							"",
+							"// Validate each entry in the \"data\" array",
+							"pm.test(\"Each provider entry is valid\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"",
+							"    jsonData.data.forEach(provider => {",
+							"        pm.expect(provider).to.have.property(\"id\").that.is.a(\"string\");",
+							"        pm.expect(provider.id).to.match(uuidRegex);",
+							"",
+							"        pm.expect(provider).to.have.property(\"correo\").that.is.a(\"string\");",
+							"        pm.expect(provider).to.have.property(\"tipo_identificacion\").that.is.a(\"string\");",
+							"        pm.expect(provider).to.have.property(\"identificacion\").that.is.a(\"string\");",
+							"        pm.expect(provider).to.have.property(\"pais\").that.is.a(\"string\");",
+							"        pm.expect(provider).to.have.property(\"fecha_creacion\").that.is.a(\"string\");",
+							"        pm.expect(provider).to.have.property(\"nombre\").that.is.a(\"string\");",
+							"        pm.expect(provider).to.have.property(\"direccion\").that.is.a(\"string\");",
+							"        pm.expect(provider).to.have.property(\"ciudad\").that.is.a(\"string\");",
+							"    });",
+							"});",
+							"",
+							"",
+							"// Store the first provider's ID in a local variable",
+							"if (pm.response.json().data.length > 0) {",
+							"    let firstProviderId = pm.response.json().data[0].id;",
+							"    pm.environment.set(\"proveedorId\", firstProviderId);",
+							"",
+							"    pm.test(\"First provider ID stored in variable\", function () {",
+							"        pm.expect(firstProviderId).to.be.a(\"string\");",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -137,10 +403,40 @@
 		},
 		{
 			"name": "Obtener por Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response is successful\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"// Validate response structure",
+							"pm.test(\"Response contains correct provider fields\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var storedProveedorId = pm.environment.get(\"proveedorId\");",
+							"",
+							"    pm.expect(jsonData).to.have.property(\"id\", storedProveedorId);",
+							"});",
+							"",
+							"// Validate UUID format of ID",
+							"pm.test(\"ID is a valid UUID\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    var uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;",
+							"    pm.expect(jsonData.id).to.match(uuidRegex);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "{{base_url}}/74165276-6607-4df0-a4de-f3b29eedd350"
+				"url": "{{base_url}}/{{proveedorId}}"
 			},
 			"response": []
 		},
@@ -314,6 +610,24 @@
 				"url": "{{base_url}}/health"
 			},
 			"response": []
+		},
+		{
+			"name": "Actualizar Proveedor 1",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"identificacion\": \"290809804564\",\n    \"nombre\": \"Tech Supplies Inc.\",\n    \"correo\": \"contactoasaa@techsupplies.com\",\n    \"telefono\": \"1234567890\",\n    \"direccion\": \"123 Calle Principal, Ciudad, País\",\n    \"sitio_web\": \"https://www.techsupplies.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{base_url}}/e8fcbca8-ae78-4d9b-af8c-75ef6ca58039"
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -342,12 +656,17 @@
 		{
 			"key": "base_url",
 			"value": "http://localhost:8005/proveedores",
-			"type": "string",
-			"disabled": true
+			"type": "string"
 		},
 		{
 			"key": "base_url",
 			"value": "http://localhost/proveedores",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "proveedorId",
+			"value": "",
 			"type": "string"
 		}
 	]

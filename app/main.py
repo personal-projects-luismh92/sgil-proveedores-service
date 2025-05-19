@@ -9,13 +9,12 @@ from common_for_services.database.connection import engine, Base
 from common_for_services.middleware.db_transaction import DBTransactionMiddleware
 from common_for_services.tasks.celery_worker import celery
 from app.routers import proveedor
-
+import os
 logging.basicConfig(level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("main_app")
 
 # Crear todas las tablas en la base de datos (si no existen)
-
 
 async def init_db():
     """ Crear todas las tablas en la base de datos (si no existen) """
@@ -62,7 +61,6 @@ app.add_middleware(
     CORSMiddleware,
     # Cambia esto por los dominios permitidos en producción
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

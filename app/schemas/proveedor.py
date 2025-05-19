@@ -5,12 +5,13 @@ from datetime import datetime
 
 class ProveedorSchema(BaseModel):
     """ Esquema de validación para los datos de un proveedor """
+    tipo_identificacion: str
     identificacion: str
     nombre: str
     correo: EmailStr
-    telefono: Optional[str] = None
     direccion: Optional[str] = None
-    sitio_web: Optional[str] = None
+    pais: Optional[str] = None
+    ciudad: Optional[str] = None
 
     class Config:
         """ Configuración de la clase """

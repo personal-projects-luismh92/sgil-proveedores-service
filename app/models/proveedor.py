@@ -8,50 +8,53 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from common_for_services.database.connection import Base
 
+
 class Proveedor(Base):
     """Modelo de Proveedor en el servicio de proveedores"""
     __tablename__ = "proveedor"
 
     id = Column(UUID(as_uuid=True), primary_key=True,
                 default=uuid.uuid4, nullable=False)
+    tipo_identificacion = Column(String(100),
+                                 nullable=False,
+                                 comment="Tipo de identificación fiscal o comercial (NIT, RFC, RUC, etc.)")
     identificacion = Column(
-        String(50),
+        String(15),
         unique=True,
         nullable=False,
         index=True,
         comment="Número de identificación fiscal o comercial (NIT, RFC, RUC, etc.)"
     )
     nombre = Column(
-        String(100),
+        String(50),
         nullable=False,
         index=True,
         comment="Nombre de la empresa proveedora"
     )
     correo = Column(
-        String(255),
+        String(50),
         unique=True,
-        nullable=True,
+        nullable=False,
         index=True,
         comment="Correo electrónico de contacto"
     )
     direccion = Column(
         Text,
-        nullable=True,
+        nullable=False,
         comment="Dirección física del proveedor"
     )
     pais = Column(
-        String(255),
-        nullable=True,
+        String(30),
+        nullable=False,
         comment="Pais del proveedor"
     )
     ciudad = Column(
-        String(255),
-        nullable=True,
+        String(30),
+        nullable=False,
         comment="Ciudad del proveedor"
     )
     fecha_creacion = Column(
         DateTime,
-        default=datetime.utcnow,
         server_default=func.now(),
         nullable=False
     )
@@ -59,8 +62,6 @@ class Proveedor(Base):
     __table_args__ = (
         CheckConstraint("correo LIKE '%@%.%' OR correo IS NULL",
                         name="check_correo_format"),
-        CheckConstraint("LENGTH(telefono) >= 7 OR telefono IS NULL",
-                        name="check_telefono_length"),
         CheckConstraint(
             "LENGTH(identificacion) >= 6 AND identificacion NOT LIKE ' %'", name="check_identificacion"),
     )
